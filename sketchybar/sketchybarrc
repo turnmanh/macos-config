@@ -36,7 +36,7 @@ sketchybar --bar \
   blur_radius=10 \
   margin=8 \
   corner_radius=10 \
-  color=${NORD4} \
+  color=${NORD0} \
   border_color=${NORD4} \
   y_offset=7
 
@@ -51,8 +51,8 @@ default=(
   icon.font="Hack Nerd Font:Bold:16.0"
   label.font="Hack Nerd Font:Thin:16.0"
   label.align=center
-  icon.color=${NORD3}
-  label.color=${NORD3}
+  icon.color=${NORD4}
+  label.color=${NORD4}
   icon.padding_left=2
   icon.padding_right=2
   label.padding_left=2
@@ -88,11 +88,24 @@ sketchybar --default "${default[@]}"
 # We add some regular items to the left side of the bar, where
 # only the properties deviating from the current defaults need to be set
 
+for sid in $(aerospace list-workspaces --all); do
+    sketchybar --add item space.$sid left \
+        --subscribe space.$sid aerospace_workspace_change \
+        --set space.$sid \
+        background.color=${NORD0} \
+        background.corner_radius=5 \
+        background.height=25 \
+        background.drawing=off \
+        label="$sid" \
+        click_script="aerospace workspace $sid" \
+        script="$CONFIG_DIR/plugins/aerospace.sh $sid"
+done
+
 sketchybar --add item chevron left \
            --set chevron icon= label.drawing=off \
-          #  --add item front_app left \
-          #  --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
-          #  --subscribe front_app front_app_switched
+           --add item front_app left \
+           --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
+           --subscribe front_app front_app_switched
 
 ##### Adding Right Items #####
 # In the same way as the left items we can add items to the right side.
@@ -141,19 +154,6 @@ sketchybar -m --add item vpn right \
               --set vpn icon= \
                         update_freq=5 \
                         script="~/.config/sketchybar/plugins/vpn.sh"
-
-for sid in $(aerospace list-workspaces --all); do
-    sketchybar --add item space.$sid left \
-        --subscribe space.$sid aerospace_workspace_change \
-        --set space.$sid \
-        background.color=${NORD3} \
-        background.corner_radius=5 \
-        background.height=25 \
-        background.drawing=off \
-        label="$sid" \
-        click_script="aerospace workspace $sid" \
-        script="$CONFIG_DIR/plugins/aerospace.sh $sid"
-done
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update

@@ -27,13 +27,13 @@ PADDING_ACTIVE=6
 # chmod +x ~/.config/sketchybar/plugins/aerospace.sh
 
 if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-    sketchybar --set $NAME  label.color=${NORD11} \
+    sketchybar --set $NAME  label.color=${NORD13} \
                             label.font.style="Bold" \
                             label.font.size=20 \
                             label.padding_left=${PADDING_ACTIVE} \
                             label.padding_right=${PADDING_ACTIVE}
 else
-    sketchybar --set $NAME  label.color=${NORD3} \
+    sketchybar --set $NAME  label.color=${NORD4} \
                             label.font.style="Thin" \
                             label.font.size=16 \
                             label.padding_left=${PADDING_INACTIVE} \
