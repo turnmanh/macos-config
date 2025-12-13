@@ -66,8 +66,8 @@ automatically-unhide-macos-hidden-apps = false
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
-# - Constant:     gaps.outer.top = 8
-# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
+# - Constant:     gaps.outer.top =        10
+# - Per monitor:  gaps.outer.top =        10]
 #                 In this example, 24 is a default value when there is no match.
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See:
@@ -77,7 +77,11 @@ automatically-unhide-macos-hidden-apps = false
     inner.vertical =   10
     outer.left =       10
     outer.bottom =     10
-    outer.top =        10
+    outer.top = [
+        { monitor."built-in" = 10 },
+        { monitor."main" = 40 },
+        10
+    ]
     outer.right =      10
     
 # 'main' binding mode declaration
