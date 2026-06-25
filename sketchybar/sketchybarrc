@@ -4,22 +4,22 @@
 # https://github.com/FelixKratz/dotfiles
 
 # Nord color palette
-NORD0=0xFF2E3440
-NORD1=0xFF3B4252
-NORD2=0xFF434C5E
-NORD3=0xFF4C566A
-NORD4=0xAAD8DEE9
-NORD5=0xE5E9F0
-NORD6=0xECEFF4
-NORD7=0x8FBCBB
-NORD8=0x88C0D0
-NORD9=0xFF81A1C1
-NORD10=0xFF5E81AC
-NORD11=0xFFBF616A
-NORD12=0xD08770
-NORD13=0xEBCB8B
-NORD14=0xA3BE8C
-NORD15=0xB48EAD
+NORD0=0xFF2E3440   # Polar Night (darkest)
+NORD1=0xFF3B4252   # Polar Night
+NORD2=0xFF434C5E   # Polar Night
+NORD3=0xFF4C566A   # Polar Night (lightest)
+NORD4=0xFFD8DEE9   # Snow Storm (darkest)
+NORD5=0xFFE5E9F0   # Snow Storm
+NORD6=0xFFECEFF4   # Snow Storm (lightest)
+NORD7=0xFF8FBCBB   # Frost (mint)
+NORD8=0xFF88C0D0   # Frost (cyan)
+NORD9=0xFF81A1C1   # Frost (blue-gray)
+NORD10=0xFF5E81AC  # Frost (blue)
+NORD11=0xFFBF616A  # Aurora (red)
+NORD12=0xFFD08770  # Aurora (orange)
+NORD13=0xFFEBCB8B  # Aurora (yellow)
+NORD14=0xFFA3BE8C  # Aurora (green)
+NORD15=0xFFB48EAD  # Aurora (purple)
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 
@@ -33,11 +33,11 @@ PLUGIN_DIR="$CONFIG_DIR/plugins"
 sketchybar --bar \
   position=top \
   height=25 \
-  blur_radius=10 \
+  blur_radius=30 \
   margin=8 \
-  corner_radius=10 \
-  color=${NORD0} \
-  border_color=${NORD4} \
+  corner_radius=16 \
+  color=0xAA222733 \
+  border_color=0x40FFFFFF \
   y_offset=7
 
 ##### Changing Defaults #####
@@ -88,17 +88,20 @@ sketchybar --default "${default[@]}"
 # We add some regular items to the left side of the bar, where
 # only the properties deviating from the current defaults need to be set
 
+# Define aerospace event BEFORE subscribing to it
+sketchybar --add event aerospace_workspace_change
+
 for sid in $(aerospace list-workspaces --all); do
-    sketchybar --add item space.$sid left \
-        --subscribe space.$sid aerospace_workspace_change \
-        --set space.$sid \
-        background.color=${NORD0} \
-        background.corner_radius=5 \
-        background.height=25 \
-        background.drawing=off \
-        label="$sid" \
-        click_script="aerospace workspace $sid" \
-        script="$CONFIG_DIR/plugins/aerospace.sh $sid"
+  sketchybar --add item space.$sid left \
+    --subscribe space.$sid aerospace_workspace_change \
+    --set space.$sid \
+    background.color=0x40FFFFFF \
+    background.corner_radius=8 \
+    background.height=25 \
+    background.drawing=on \
+    label="$sid" \
+    click_script="aerospace workspace $sid" \
+    script="$CONFIG_DIR/plugins/aerospace.sh $sid"
 done
 
 sketchybar --add item chevron left \
@@ -127,9 +130,6 @@ sketchybar --add item clock right \
            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
            --subscribe battery system_woke power_source_change
 
-
-# Displaying the current workspace which set by AeroSpace tiling window manager.
-sketchybar --add event aerospace_workspace_change
 
 # Memory Usage (Right)
 # sketchybar -m --add item memory right \
